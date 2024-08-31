@@ -4,8 +4,11 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: change_this
+      POSTGRES_DB: db
     volumes:
       - local-pgdata:/var/lib/postgresql/data
+    ports:
+      - "8080:5432"
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin4_container
