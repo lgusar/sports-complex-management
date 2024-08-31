@@ -3,8 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   HttpStatus,
-  NotImplementedException,
   Param,
   Post,
   Put,
@@ -13,23 +13,23 @@ import { SportsClassService } from './sports-class.service';
 import { SportsClass } from './sports-class.entity';
 import { SportsClassDto } from './sports-class.dto';
 
-@Controller('sports-class')
+@Controller('classes')
 export class SportsClassController {
-  constructor(private readonly classService: SportsClassService) {}
+  constructor(private readonly sportsClassService: SportsClassService) {}
 
   @Get()
   findAll(): Promise<SportsClass[]> {
-    return this.classService.findAll();
+    return this.sportsClassService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: number): Promise<SportsClass> {
-    return this.classService.findOne(id);
+    return this.sportsClassService.findOne(id);
   }
 
   @Post()
-  create(@Body() classDto: SportsClassDto): Promise<SportsClass> {
-    throw new NotImplementedException();
+  create(@Body() sportsClassDto: SportsClassDto): Promise<SportsClass> {
+    return this.sportsClassService.create(sportsClassDto);
   }
 
   @Put(':id')
@@ -37,12 +37,12 @@ export class SportsClassController {
     @Param('id') id: number,
     @Body() classDto: SportsClassDto,
   ): Promise<SportsClass> {
-    throw new NotImplementedException();
+    return this.sportsClassService.update(id, classDto);
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   async remove(@Param('id') id: number) {
-    await this.classService.remove(id);
-    return HttpStatus.NO_CONTENT;
+    await this.sportsClassService.remove(id);
   }
 }
