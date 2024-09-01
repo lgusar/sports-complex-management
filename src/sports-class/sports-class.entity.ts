@@ -4,12 +4,12 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 export class SportsClass {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column()
+  @Column('text', { nullable: false })
   name: string;
-  @Column()
+  @Column('text', { nullable: true })
   weekSchedule: string;
-  @Column()
+  @Column('text', { nullable: true })
   classDuration: string;
-  @Column()
+  @Column('text', { nullable: true })
   description: string;
 }

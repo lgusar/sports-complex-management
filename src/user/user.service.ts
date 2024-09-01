@@ -14,7 +14,7 @@ export class UserService {
     return this.userRepository.findOneBy({ email: email });
   }
 
-  async save(user: User): Promise<void> {
-    this.userRepository.save(user);
+  async save(user: User): Promise<User> {
+    return await this.userRepository.save(user);
   }
 }
