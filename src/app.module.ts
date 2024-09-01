@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SportsClass } from './sports-class/sports-class.entity';
 import { SportsClassModule } from './sports-class/sports-class.module';
 import { User } from './user/user.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { User } from './user/user.entity';
       synchronize: true,
     }),
     SportsClassModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
