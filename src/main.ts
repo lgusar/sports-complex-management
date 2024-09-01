@@ -13,7 +13,9 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, document);
-
+  /*
+  TODO enable HTTPS
+   */
   await app.listen(3000);
 }
 
