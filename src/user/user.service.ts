@@ -10,8 +10,8 @@ export class UserService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async findOne(username: string): Promise<User | undefined> {
-    return this.userRepository.findOneBy({ username });
+  async findOne(email: string): Promise<User | undefined> {
+    return this.userRepository.findOneBy({ email: email });
   }
 
   async save(user: User): Promise<void> {
