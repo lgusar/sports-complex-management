@@ -8,12 +8,15 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { SportsClassService } from './sports-class.service';
 import { SportsClass } from './sports-class.entity';
 import { SportsClassDto } from './sports-class.dto';
+import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('classes')
+@UseGuards(AuthGuard)
 export class SportsClassController {
   constructor(private readonly sportsClassService: SportsClassService) {}
 
