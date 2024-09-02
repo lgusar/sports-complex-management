@@ -3,7 +3,7 @@ services:
     image: postgres
     restart: always
     environment:
-      POSTGRES_PASSWORD: change_this
+      POSTGRES_PASSWORD: c7pkX4wixVzArRSg
       POSTGRES_DB: db
     volumes:
       - local-pgdata:/var/lib/postgresql/data
