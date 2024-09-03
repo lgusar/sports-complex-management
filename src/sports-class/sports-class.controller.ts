@@ -8,6 +8,8 @@ import {
   Param,
   Post,
   Put,
+  Query,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { SportsClassService } from './sports-class.service';
@@ -24,8 +26,12 @@ export class SportsClassController {
   constructor(private readonly sportsClassService: SportsClassService) {}
 
   @Get()
-  findAll(): Promise<SportsClass[]> {
-    return this.sportsClassService.findAll();
+  find(@Query() query: any): Promise<SportsClass[]> {
+    if (query.sports === undefined) {
+      return this.sportsClassService.findAll();
+    }
+    const filter = query.sports.split(',');
+    return this.sportsClassService.findSome(filter);
   }
 
   @Get(':id')
@@ -54,7 +60,13 @@ export class SportsClassController {
   @UseGuards(RolesGuard)
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async remove(@Param('id') id: number) {
-    await this.sportsClassService.remove(id);
+  remove(@Param('id') id: number) {
+    return this.sportsClassService.remove(id);
+  }
+
+  @Post(':id')
+  @HttpCode(HttpStatus.OK)
+  apply(@Param('id') id: number, @Req() request: any): Promise<SportsClass> {
+    return this.sportsClassService.apply(id, request.user.sub);
   }
 }

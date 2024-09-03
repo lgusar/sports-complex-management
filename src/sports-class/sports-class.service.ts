@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { SportsClass } from './sports-class.entity';
 import { Repository } from 'typeorm';
 import { SportsClassDto } from './sports-class.dto';
+import { User } from '../user/user.entity';
 
 @Injectable()
 export class SportsClassService {
@@ -13,6 +14,16 @@ export class SportsClassService {
 
   async findAll(): Promise<SportsClass[]> {
     return this.sportsClassRepository.find();
+  }
+
+  async findSome(sports: string[]): Promise<SportsClass[]> {
+    let classes = await this.sportsClassRepository.find();
+    console.log(sports);
+    classes = classes.filter((s) => {
+      sports.some((sport) => s.name === sport);
+    });
+
+    return classes;
   }
 
   async findOne(id: number): Promise<SportsClass> {
@@ -38,5 +49,15 @@ export class SportsClassService {
 
   async remove(id: number): Promise<void> {
     await this.sportsClassRepository.delete(id);
+  }
+
+  async apply(id: number, userId: number) {
+    const user: User = {
+      id: userId,
+    };
+    const sportsClass = await this.sportsClassRepository.findOneBy({ id });
+    sportsClass.users.push(user);
+
+    return await this.sportsClassRepository.save(sportsClass);
   }
 }

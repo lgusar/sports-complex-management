@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { User } from '../user/user.entity';
 
 @Entity()
 export class SportsClass {
@@ -12,4 +19,7 @@ export class SportsClass {
   classDuration: string;
   @Column('text', { nullable: true })
   description: string;
+  @ManyToMany(() => User, { eager: true })
+  @JoinTable()
+  users: User[];
 }
