@@ -5,6 +5,9 @@ import { SportsClassModule } from './sports-class/sports-class.module';
 import { User } from './user/user.entity';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { LoginDetail } from './login-details/login-detail.entity';
+import { LoginDetailModule } from './login-details/login-detail.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -19,11 +22,17 @@ import { ConfigModule } from '@nestjs/config';
        */
       password: process.env.DATABASE_PASSWORD,
       database: 'db',
-      entities: [SportsClass, User],
+      entities: [SportsClass, User, LoginDetail],
       synchronize: true,
+    }),
+    JwtModule.register({
+      global: true,
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '60s' },
     }),
     SportsClassModule,
     AuthModule,
+    LoginDetailModule,
   ],
   controllers: [],
   providers: [],

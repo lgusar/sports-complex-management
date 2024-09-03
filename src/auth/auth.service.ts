@@ -1,42 +1,63 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '../user/user.entity';
 import { Role } from '../role/role.enum';
 import * as bcrypt from 'bcrypt';
+import { LoginDetailService } from '../login-details/login-detail.service';
+import { LoginDetail } from '../login-details/login-detail.entity';
 
 @Injectable()
 export class AuthService {
   constructor(
+    private loginDetailService: LoginDetailService,
     private usersService: UserService,
     private jwtService: JwtService,
   ) {}
 
   async signIn(email: string, pass: string): Promise<{ access_token: string }> {
-    const user = await this.usersService.findOne(email);
-    const hash = await bcrypt.hash(pass, user.salt);
-
-    if (user?.passwordHash !== hash) {
+    const loginDetail = await this.loginDetailService.findOne(email);
+    const hash = await bcrypt.hash(pass, loginDetail.salt);
+    if (loginDetail?.passwordHash !== hash) {
       throw new UnauthorizedException();
     }
-    return this.createAccessToken(user);
+    return this.createAccessToken(loginDetail);
   }
 
   async signUp(email: string, pass: string): Promise<{ access_token: string }> {
+    const loginDetail = await this.createUserAndLoginDetail(
+      email,
+      pass,
+      Role.User,
+    );
+    return this.createAccessToken(loginDetail);
+  }
+
+  async createUserAndLoginDetail(
+    email: string,
+    pass: string,
+    role: Role,
+  ): Promise<LoginDetail> {
     const { hash, salt } = await this.hashAndGenerateSalt(pass);
-    let user: User = {
+    const user = await this.usersService.save({});
+    const loginDetail: LoginDetail = {
       email: email,
       passwordHash: hash,
       salt: salt,
       // TODO: role shouldn't get hardcoded like this, there is no way to make an admin user
-      role: Role.User,
+      role: role,
+      user: user,
     };
-    user = await this.usersService.save(user);
-    return this.createAccessToken(user);
+    return this.loginDetailService.save(loginDetail);
   }
 
-  async createAccessToken(user: User): Promise<{ access_token: string }> {
-    const payload = { sub: user.id, email: user.email, role: user.role };
+  async createAccessToken(
+    loginDetail: LoginDetail,
+  ): Promise<{ access_token: string }> {
+    const payload = {
+      sub: loginDetail.user.id,
+      email: loginDetail.email,
+      role: loginDetail.role,
+    };
     return {
       access_token: await this.jwtService.signAsync(payload),
     };
