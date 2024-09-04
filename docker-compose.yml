@@ -3,7 +3,7 @@ services:
     image: postgres
     restart: always
     environment:
-      POSTGRES_PASSWORD: c7pkX4wixVzArRSg
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: db
     volumes:
       - local-pgdata:/var/lib/postgresql/data
@@ -16,8 +16,8 @@ services:
     ports:
       - "8888:80"
     environment:
-      PGADMIN_DEFAULT_EMAIL: user@user.com
-      PGADMIN_DEFAULT_PASSWORD: change_this
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_USER_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_USER_PASSWORD}
     volumes:
       - pgadmin-data:/var/lib/pgadmin
 volumes:
