@@ -16,6 +16,9 @@ export class AuthService {
 
   async signIn(email: string, pass: string): Promise<{ access_token: string }> {
     const loginDetail = await this.loginDetailService.findOne(email);
+    if (loginDetail === null) {
+      throw new UnauthorizedException();
+    }
     const hash = await bcrypt.hash(pass, loginDetail.salt);
     if (loginDetail?.passwordHash !== hash) {
       throw new UnauthorizedException();

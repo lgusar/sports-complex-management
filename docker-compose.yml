@@ -20,6 +20,17 @@ services:
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_USER_PASSWORD}
     volumes:
       - pgadmin-data:/var/lib/pgadmin
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    depends_on:
+      - db
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./src:/app/src
 volumes:
   local-pgdata:
   pgadmin-data:
