@@ -6,11 +6,13 @@ import {
   HttpStatus,
   Param,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDetailDto } from '../login-details/login-detail.dto';
 import { Role } from '../role/role.enum';
 import { UserService } from '../user/user.service';
+import { AuthGuard } from './auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -48,7 +50,9 @@ export class AuthController {
     );
   }
 
+  // TODO: new custom guard for deleting users, both admin and the user can delete a user
   @Delete('/user/:id')
+  @UseGuards(AuthGuard)
   async delete(@Param() id: number) {
     await this.userService.delete({ id });
   }
