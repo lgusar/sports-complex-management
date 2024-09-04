@@ -17,9 +17,6 @@ import { JwtModule } from '@nestjs/jwt';
       host: 'localhost',
       port: 8080,
       username: 'postgres',
-      /*
-      TODO: USE SECRETS
-       */
       password: process.env.DATABASE_PASSWORD,
       database: 'db',
       entities: [SportsClass, User, LoginDetail],
