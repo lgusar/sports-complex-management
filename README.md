@@ -18,7 +18,8 @@ Two files are required:
 - .env
 - .dockerenv
 
-Both of them are supposed to be in the root folder of the system.
+Both of them are supposed to be in the root folder of the app.
+
 .dockerenv requires defining
 
 - POSTGRES_PASSWORD
@@ -38,6 +39,6 @@ Both of them are supposed to be in the root folder of the system.
 
 The backend application and the database are dockerized.
 
-API documentation available through Swagger after starting the application.
+API documentation available through Swagger after starting the application on `http://localhost:3000/swagger`.
 
 Database management available through PGAdmin running on `http://localhost:8888`
