@@ -17,13 +17,12 @@ export class SportsClassService {
   }
 
   async findSome(sports: string[]): Promise<SportsClass[]> {
-    let classes = await this.sportsClassRepository.find();
-    console.log(sports);
-    classes = classes.filter((s) => {
-      sports.some((sport) => s.name === sport);
-    });
+    const classes = await this.sportsClassRepository.find();
 
-    return classes;
+    return classes.filter((c) => {
+      sports = sports.map((sport) => sport.toLowerCase());
+      return sports.includes(c.name.toLowerCase());
+    });
   }
 
   async findOne(id: number): Promise<SportsClass> {
