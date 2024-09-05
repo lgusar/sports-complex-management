@@ -8,8 +8,8 @@ Simple sports management application
 - User authorization (admin and user roles)
 - Management of sports classes for administrators (CRUD)
 - Sports class filtering for users
-- Applying on sports classes
-- Documentation with Swagger on `http://localhost:3000`
+- Users applying to sports classes
+- Documentation with Swagger on http://localhost:3000
 
 ## Starting the application
 
@@ -39,6 +39,6 @@ Both of them are supposed to be in the root folder of the app.
 
 The backend application and the database are dockerized.
 
-API documentation available through Swagger after starting the application on `http://localhost:3000/swagger`.
+API documentation available through Swagger after starting the application on http://localhost:3000/swagger
 
-Database management available through PGAdmin running on `http://localhost:8888`
+Database management available through PGAdmin running on http://localhost:8888
