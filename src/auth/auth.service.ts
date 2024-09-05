@@ -46,7 +46,6 @@ export class AuthService {
       email: email,
       passwordHash: hash,
       salt: salt,
-      // TODO: role shouldn't get hardcoded like this, there is no way to make an admin user
       role: role,
       user: user,
     };

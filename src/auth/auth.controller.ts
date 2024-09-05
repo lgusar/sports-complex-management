@@ -39,7 +39,6 @@ export class AuthController {
     );
   }
 
-  // TODO: seed database with an admin user
   @HttpCode(HttpStatus.OK)
   @Post('admin')
   async createAdmin(@Body() loginDetailDto: LoginDetailDto) {

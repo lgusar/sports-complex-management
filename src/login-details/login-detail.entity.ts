@@ -18,7 +18,6 @@ export class LoginDetail {
   passwordHash: string;
   @Column('text', { nullable: false })
   salt: string;
-  // TODO: Make a Roles table
   @Column('text', { nullable: false })
   role: Role;
   @OneToOne(() => User, {
