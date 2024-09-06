@@ -34,6 +34,15 @@ Create both of them in the root folder of the app.
 - JWT_SECRET
 
 ```docker compose --env-file .dockerenv up -d```
+## Notes
+
+### Postman
+
+Because this app uses JWT for authentication and authorization, I recommend that you test the endpoints using Postman in order to save the JWT token for further requests.
+
+### Using the app
+
+A user needs to be created first. There are two endpoints for this purpose. One is `/api/auth/signup` for creating normal users. The other is for testing purposes to create an admin account `/api/auth/admin`
 
 ## Additional info
 
