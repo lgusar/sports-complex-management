@@ -9,7 +9,7 @@ Simple sports management application
 - Management of sports classes for administrators (CRUD)
 - Sports class filtering for users
 - Users applying to sports classes
-- Documentation with Swagger on http://localhost:3000
+- API documentation with Swagger on http://localhost:3000/swagger
 
 ## Starting the application
 
@@ -18,7 +18,7 @@ Two files are required:
 - .env
 - .dockerenv
 
-Both of them are supposed to be in the root folder of the app.
+Create both of them in the root folder of the app.
 
 .dockerenv requires defining
 
